@@ -1,0 +1,85 @@
+.page-heading {
+    margin: 20px 0;
+    color: #666;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Segoe UI Light", "Arial", serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+#my-dropzone .message {
+    font-family: "Segoe UI Light", "Arial", serif;
+    font-weight: 600;
+    color: #0087F7;
+    font-size: 1.5em;
+    letter-spacing: 0.05em;
+}
+.dropzone {
+    border: 2px dashed #0087F7;
+    background: white;
+    border-radius: 5px;
+    min-height: 300px;
+    padding: 0px 0;
+    vertical-align: baseline;
+}
+.thead {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #aaaaaa;
+}
+.th.col {
+    padding: 1.5rem 1rem;
+}
+.td .col-inner {
+    padding: 0.5rem;
+}
+.dropzone .dz-message {
+    text-align: center;
+    margin: 0em 0;
+    padding: 1rem 0;
+    min-height: 15rem;
+}
+.tr.row:nth-child(2n+1) {
+    background-color: #eaeaea;
+}
+.btn-primary.start {
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 0 0.1rem 0 0.3rem;
+    display: block;
+    margin: auto;
+}
+.cta-caller-container {
+  position: absolute;
+  bottom: 0.15rem;
+}
+.message .fas.fa-plus-circle {
+    font-size: 4rem;
+    color: #b8b8b8;
+}
+.dropzone {padding-bottom: 3rem;}
+.btn-primary.disabled, .btn-primary:disabled {
+    color: #fff;
+    background-color: #ccc;
+    border-color: #007bff;
+    cursor: not-allowed;
+}
+.listing-list-item .checkboxcontainer {
+    position: absolute;
+    left: 0.1rem;
+    top: 0.1rem;
+}
+.col-inner img {
+    border-radius: 0.2rem;
+}
+.thead .tr.row {
+    background-color: #98afff;
+    color: #fff;
+}
+.tr.row {
+    display: inline-block;
+    width: 100%;
+}
+.tr.row .td, .tr.row .th {
+    vertical-align: middle;
+}
