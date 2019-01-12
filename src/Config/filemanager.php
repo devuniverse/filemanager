@@ -1,5 +1,12 @@
 <?php
 return [
-  "main_path"      => "file-manager",
-  "main"           => "layouts.app"
+
+  "filemanager_path"      => "file-manager",
+  "master_file_extend" => "filemanager::main",
+
+  'yields' => [
+      'head'   => 'css',
+      'footer' => 'js',
+      'filemanager-content'=>'filemanager-content'
+  ],
 ];

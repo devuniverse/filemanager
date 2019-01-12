@@ -1,6 +1,6 @@
-@extends('filemanager::main')
+@extends(Config::get('filemanager.master_file_extend'))
 
-@section('head')
+@section(Config::get('filemanager.yields.head'))
     <link rel="stylesheet" href="{{ url('/filemanager/assets/fontawesome/css/all.css') }}">
     <link rel="stylesheet" href="{{ url('/filemanager/assets/css/dropzone.css') }}">
     <link rel="stylesheet" href="{{ url('/filemanager/assets/css/animate.css') }}">
@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ url('/filemanager/assets/css/custom.css') }}">
 @endsection
 
-@section('js')
+@section(Config::get('filemanager.yields.footer'))
     <script src="{{ url('/filemanager/assets/js/jquery.js') }}"></script>
     <script src="{{ url('/filemanager/assets/js/dropzone.js') }}"></script>
     <script type="text/javascript">
@@ -78,12 +78,12 @@
     <script src="{{ url('/filemanager/assets/js/dropzone-config.js') }}"></script>
 @endsection
 
-@section('filemanager-content')
+@section(Config::get('filemanager.yields.filemanager-content'))
 
     <div class="row">
         <div class="col-sm-10 offset-sm-1">
             <h2 class="page-heading">Upload your Images <span id="counter"></span></h2>
-            <form method="post" action="{{ url(Config::get('filemanager.main_path').'/file-save') }}"
+            <form method="post" action="{{ url(Config::get('filemanager.filemanager_path').'/file-save') }}"
                   enctype="multipart/form-data" class="dropzone" id="filemanager-dropzone">
                 {{ csrf_field() }}
                 <div class="dz-message">

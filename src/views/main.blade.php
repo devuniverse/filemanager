@@ -9,11 +9,11 @@
 
     <link rel="stylesheet" href="{{ url('/filemanager/assets/css/bootstrap.css') }}">
 
-    @yield('head')
+    @yield(Config::get('filemanager.yields.head'))
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url(Config::get('filemanager.main_path')) }}">File manager</a>
+        <a class="navbar-brand" href="{{ url(Config::get('filemanager.filemanager_path')) }}">File manager</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -21,21 +21,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url(Config::get('filemanager.main_path').'/create') }}">Upload Images</a>
+                    <a class="nav-link" href="{{ url(Config::get('filemanager.filemanager_path').'/create') }}">Upload Images</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url(Config::get('filemanager.main_path').'/showfiles') }}">View Uploaded Files</a>
+                    <a class="nav-link" href="{{ url(Config::get('filemanager.filemanager_path').'/showfiles') }}">View Uploaded Files</a>
                 </li>
             </ul>
         </div>
     </nav>
     <div class="container-fluid filemanager-main">
-        @yield('filemanager-content')
+        @yield(Config::get('filemanager.yields.filemanager-content'))
     </div>
     <script type="text/javascript">
-      var filemanagerPath = "<?php echo Config::get("filemanager.main_path") ?>";
+      var filemanagerPath = "<?php echo Config::get("filemanager.filemanager_path") ?>";
     </script>
-    @yield('js')
+    @yield(Config::get('filemanager.yields.footer'))
+
 
 </body>
 </html>

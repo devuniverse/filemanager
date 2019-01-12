@@ -1,6 +1,6 @@
 <?php
 
-$filemanagerPath = Config::get('filemanager.main_path');
+$filemanagerPath = Config::get('filemanager.filemanager_path');
 
 Route::group(['prefix' => $filemanagerPath,  'middleware' => ['web','auth']], function()
 {
