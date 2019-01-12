@@ -11,6 +11,7 @@
 
 @section(Config::get('filemanager.yields.filemanager-content'))
     <div class="table-responsive-sm">
+        @include('filemanager::partials.nav')
         @include('filemanager::partials.itemlist')
     </div>
 @endsection

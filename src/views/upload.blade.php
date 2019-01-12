@@ -79,6 +79,7 @@
 @endsection
 
 @section(Config::get('filemanager.yields.filemanager-content'))
+@include('filemanager::partials.nav')
 
     <div class="row">
         <div class="col-sm-10 offset-sm-1">
