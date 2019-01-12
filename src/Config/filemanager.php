@@ -9,4 +9,12 @@ return [
       'footer' => 'js',
       'filemanager-content'=>'filemanager-content'
   ],
+
+  'includes' => [
+      'jquery'   => true,
+      'animate' => true,
+      'fontawesome' => true
+  ],
+
+
 ];
