@@ -90,7 +90,7 @@
     <div class="row">
         <div class="col-sm-10 offset-sm-1">
             <h2 class="page-heading">Upload your Images <span id="counter"></span></h2>
-            <form method="post" action="{{ url(Config::get('filemanager.filemanager_path').'/file-save') }}"
+            <form method="post" action="{{ url(Config::get('filemanager.filemanager_url').'/file-save') }}"
                   enctype="multipart/form-data" class="dropzone" id="filemanager-dropzone">
                 {{ csrf_field() }}
                 <div class="dz-message">

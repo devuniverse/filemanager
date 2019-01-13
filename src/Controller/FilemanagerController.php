@@ -8,9 +8,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Devuniverse\Filemanager\Models\Upload;
-
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
+use Config;
+use Illuminate\Support\Facades\Storage;
+
 
 class FilemanagerController extends Controller
 {
@@ -19,7 +21,7 @@ class FilemanagerController extends Controller
 
     public function __construct()
     {
-        $this->photos_path = public_path('/images');
+        $this->photos_path = storage_path(Config::get('filemanager.files_upload_path'));
     }
     public function loadIndex(){
       $files = Upload::paginate(10);
@@ -63,8 +65,8 @@ class FilemanagerController extends Controller
         if (!is_dir($this->photos_path)) {
             mkdir($this->photos_path, 0777);
         }
-
         for ($i = 0; $i < count($photos); $i++) {
+          // Storage::put('avatars/1', $fileContents);
             $photo = $photos[$i];
             $name = sha1(date('YmdHis') . str_random(30));
             $save_name = $name . '.' . $photo->getClientOriginalExtension();
@@ -77,6 +79,16 @@ class FilemanagerController extends Controller
                 ->save($this->photos_path . '/' . $resize_name);
 
             $photo->move($this->photos_path, $save_name);
+
+            // $s3 = Storage::disk('s3');
+            // $s3->put('your/s3/path/photo.jpg', file_get_contents($uploadedFile));
+            if($extension=="zip"){
+              $filePath = 'uploads/zips/' . $save_name;
+            }else{
+              $filePath = 'uploads/imgs/' . $save_name;
+            }
+            $s3 = \Storage::disk('s3');
+            $imageAmazoned = $s3->put($filePath, file_get_contents($photo), 'public');
 
             $upload = new Upload();
             $upload->filename = $save_name;

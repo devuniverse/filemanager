@@ -1,4 +1,16 @@
 <div class="table">
+    <div class="actions-menu">
+      <div class="list-actions vertimiddle">
+        <select class="choose-action" name="choose-action">
+          <option value="0">Choose one</option>
+          <option value="1">Delete</option>
+          <option value="2">Archive</option>
+          <option value="3" disabled>Update</option>
+        </select>
+      </div><div class="apply-action vertimiddle">
+        <button type="button" name="button">{{ __("Apply") }}</button>
+      </div>
+    </div>
     <div class='thead'>
       <div class="tr row">
           <div class="th cell lap--1-2 nexus--1-4" scope="col">
@@ -17,7 +29,7 @@
           <div class="tr row animated fadeInDown">
             <div class="td cell lap--1-2 nexus--1-4 listing-list-item">
               <div class="col-inner">
-                <img src="/images/{{ $file->resized_name }}">
+                <img src="{{ asset(Config::get('filemanager.files_upload_path').'/'.$file->resized_name) }}">
                 <div class="checkboxcontainer">
                   <input type="checkbox" id="checkbox-{{ $file->id }}" class="regular-checkbox big-checkbox"><label for="checkbox-{{ $file->id }}"></label>
                 </div>

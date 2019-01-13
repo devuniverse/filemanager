@@ -16,7 +16,7 @@
         @yield(Config::get('filemanager.yields.filemanager-content'))
     </div>
     <script type="text/javascript">
-      var filemanagerPath = "<?php echo Config::get("filemanager.filemanager_path") ?>";
+      var filemanagerPath = "<?php echo Config::get("filemanager.filemanager_url") ?>";
     </script>
     @yield(Config::get('filemanager.yields.footer'))
 

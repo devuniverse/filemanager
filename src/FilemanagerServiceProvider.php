@@ -28,7 +28,7 @@ class FilemanagerServiceProvider extends ServiceProvider
           __DIR__.'/database/' => database_path(),
       ], 'filemanager');
       $this->loadMigrationsFrom(__DIR__.'/database/migrations');
-
+      
       /************************  TO VIEWS ***************************/
 
       view()->composer('*', function ($view){

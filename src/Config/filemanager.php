@@ -1,7 +1,10 @@
 <?php
 return [
 
-  "filemanager_path"      => "file-manager",
+  "files_upload_path"      => "uploads",
+
+  "filemanager_url"      => "file-manager",
+
   "master_file_extend" => "filemanager::main",
 
   'yields' => [
