@@ -24,7 +24,7 @@ class FilemanagerController extends Controller
         $this->photos_path = storage_path(Config::get('filemanager.files_upload_path'));
     }
     public function loadIndex(){
-      $files = Upload::paginate(10);
+      $files = Upload::paginate(Config::get('filemanager.files_per_page'));
       return view('filemanager::index', compact('files'));
     }
     /**
@@ -34,7 +34,7 @@ class FilemanagerController extends Controller
      */
     public function index()
     {
-        $files = Upload::paginate(10);
+        $files = Upload::paginate(Config::get('filemanager.files_per_page'));
         return view('filemanager::uploaded-images', compact('files'));
     }
 
@@ -63,37 +63,67 @@ class FilemanagerController extends Controller
         }
 
         if (!is_dir($this->photos_path)) {
-            mkdir($this->photos_path, 0777);
+            mkdir($this->photos_path, 0775);
         }
+
         for ($i = 0; $i < count($photos); $i++) {
-          // Storage::put('avatars/1', $fileContents);
             $photo = $photos[$i];
             $name = sha1(date('YmdHis') . str_random(30));
             $save_name = $name . '.' . $photo->getClientOriginalExtension();
             $resize_name = $name . str_random(2) . '.' . $photo->getClientOriginalExtension();
 
-            Image::make($photo)
-                ->resize(250, null, function ($constraints) {
-                    $constraints->aspectRatio();
-                })
-                ->save($this->photos_path . '/' . $resize_name);
+            $extension = $photo->getClientOriginalExtension();
 
-            $photo->move($this->photos_path, $save_name);
+            $filemanagerDisk = Config::get('filemanager.filemanager_storage_disk');
 
-            // $s3 = Storage::disk('s3');
-            // $s3->put('your/s3/path/photo.jpg', file_get_contents($uploadedFile));
-            if($extension=="zip"){
-              $filePath = 'uploads/zips/' . $save_name;
+            $resized  = storage_path('app/public/') . $resize_name;
+            $thumbUploaded = Image::make($photo)
+            ->resize(150, null, function ($constraints) {
+              $constraints->aspectRatio();
+            })->save($resized);
+
+            if($filemanagerDisk=="s3"){
+
+              // $thumbUploaded->save($resized);
+              // url('storage/').$resize_name;
+              //Config::get('filemanager.files_upload_path')
+              // $photo->move($this->photos_path, $save_name);
+              // $s3 = Storage::disk('s3');
+              // $s3->put('your/s3/path/photo.jpg', file_get_contents($uploadedFile));
+              if($extension=="zip"){
+                $filePath = 'uploads/zips/' . $save_name;
+              }else{
+                $filePath = 'uploads/imgs/' . $save_name;
+                $filePathThumbs = 'uploads/imgs/thumbnails/' . $resize_name;
+              }
+              $path = 'https://s3.amazonaws.com/coditiv/'.$filePath;
+              $pathUrl = 'https://coditiv.s3.amazonaws.com/'.$filePath;
+              $pathThumbs = 'https://s3.amazonaws.com/coditiv/'.$filePathThumbs;
+              $pathUrlThumbs = 'https://coditiv.s3.amazonaws.com/'.$filePathThumbs;
+
+              $s3 = \Storage::disk('s3');
+              $imageAmazoned = $s3->put($filePath, file_get_contents($photo), 'public');
+              $thumbAmazoned = $s3->put($filePathThumbs, file_get_contents($resized), 'public');
+              $fileurl = $pathUrlThumbs;
             }else{
-              $filePath = 'uploads/imgs/' . $save_name;
+
+              // $toStore = \Storage::disk('public');
+              // $stored = $toStore->put($save_name, file_get_contents($photo));
+              $photo->move($this->photos_path, $save_name);
+              $fileurl = url('storage/'. $resize_name) ;
             }
-            $s3 = \Storage::disk('s3');
-            $imageAmazoned = $s3->put($filePath, file_get_contents($photo), 'public');
+
+            // $photo->move($this->photos_path, $save_name);
+
 
             $upload = new Upload();
             $upload->filename = $save_name;
             $upload->resized_name = $resize_name;
             $upload->original_name = basename($photo->getClientOriginalName());
+            if($filemanagerDisk=="s3"){
+              $upload->amazon_url = $fileurl;
+            }
+            $upload->file_url = $fileurl;
             $upload->save();
         }
         return Response::json([
