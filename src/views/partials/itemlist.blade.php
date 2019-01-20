@@ -1,11 +1,15 @@
 <div class="table">
-  <form class="mass-actions-form" action="{{ Config::get('filemanager.filemanager_url').'/file-delete' }}" method="post">
+  <form class="mass-actions-form" action="/{{ Config::get('filemanager.filemanager_url').'/delete-files' }}" method="post">
     <input type="hidden" name="backto" value="{{ url()->full() }}">
+    <input type="hidden" name="page" value="@if(isset($_GET['page']) && $_GET['page']!=''){{ $_GET['page'] }}@else 1 @endif">
+      @if(isset($_GET['post_id']) && $_GET['post_id']!='')
+        <input type="hidden" name="post_id" value="{{ $_GET['post_id'] }} @endif">
+      @endif
     @csrf
 
     <div class="actions-menu">
       <div class="list-actions vertimiddle">
-        <select class="choose-action" name="choose-action">
+        <select class="chooseaction" name="chooseaction">
           <option value="0">Choose one</option>
           <option value="1">Delete</option>
           <option value="2">Archive</option>
@@ -35,17 +39,22 @@
               <div class="col-inner">
                 <?php
                     $filemanagerDisk = Config::get('filemanager.filemanager_storage_disk');
+
                 ?>
-                @if($filemanagerDisk=='s3')
-                  <img src="{{ $file->amazon_url }}">
+                @if($filemanagerDisk['s3']['default'])
+
+                  <img src="{{ $file->amazon_thumb_url }}">
+
                 @else
+
                   <img src="<?php
-                  $url = Storage::disk(Config::get('filemanager.filemanager_storage_disk'))->url($file->resized_name);
+                  $url = Storage::disk(Config::get('filemanager.filemanager_storage_disk')[0])->url($file->resized_name);
                   echo $url;
                   ?>">
+
                 @endif
                 <div class="checkboxcontainer">
-                  <input type="checkbox" id="checkbox-{{ $file->id }}" class="regular-checkbox big-checkbox" value="{{ $file->id }}"><label for="checkbox-{{ $file->id }}"></label>
+                  <input type="checkbox" name="posts[]" id="checkbox-{{ $file->id }}" class="regular-checkbox big-checkbox" value="{{ $file->id }}"><label for="checkbox-{{ $file->id }}"></label>
                 </div>
               </div>
             </div><!--

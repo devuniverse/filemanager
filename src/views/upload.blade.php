@@ -19,12 +19,15 @@
   @endif
     <script src="{{ url('/filemanager/assets/js/dropzone.js') }}"></script>
     <script type="text/javascript">
+    function processCustom(){
+      filemanagerDropzone.processQueue();
+    }
     var total_photos_counter = 0;
     var name = "";
     var filemanagerDropzone = new Dropzone("#filemanager-dropzone", {
       autoProcessQueue: false,
       uploadMultiple: true,
-      parallelUploads: 20,
+      parallelUploads: 1,
       maxFilesize: 16,
       acceptedFiles: ".jpeg,.jpg,.png,.gif,.zip, .tar, .doc, .docx",
       previewTemplate: document.querySelector('#preview').innerHTML,
@@ -72,12 +75,13 @@
             $('.btn-primary.start').find('i').remove();
           }, 1000);
           $('.btn-primary.start').prop("disabled", true);
+          processCustom();
       }
     });
     $('.btn-primary.start').on("click", function(event){
       event.preventDefault();
       $(this).prepend('<i class="fas fa-circle-notch fa-spin"></i>');
-      filemanagerDropzone.processQueue()
+      processCustom();
     });
 
     </script>

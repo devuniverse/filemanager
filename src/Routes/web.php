@@ -13,6 +13,7 @@ Route::group(['prefix' => $filemanagerPath,  'middleware' => ['web','auth']], fu
 
   Route::post('/file-save', 'Devuniverse\Filemanager\Controllers\FilemanagerController@store');
   Route::post('/file-delete', 'Devuniverse\Filemanager\Controllers\FilemanagerController@destroy');
+  Route::post('/delete-files', 'Devuniverse\Filemanager\Controllers\FilemanagerController@deleteFiles');
 
   /**
    * POST ROUTES

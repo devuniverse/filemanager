@@ -9,7 +9,23 @@ return [
 
   "files_per_page" => 25,
 
-  "filemanager_storage_disk" => "public",
+  /**
+  *|  #1  : defaults to public. Like Laravel
+  *|  #2  : File systems in this setting MUST be mutually exclusive.
+  *|        That is, Only one can have the default value to true
+  *|
+   */
+  "filemanager_storage_disk" => [
+
+      "public"  => [
+        "default" => true
+      ],
+      "s3" => [
+        "cname_path" => "", //  s3.amazonaws.com/bucket
+        "cname_url"  => "",  //  bucket.s3.amazonaws.com
+        "default"    => false,
+      ]
+    ],
 
   // "default_file_system" => "public",
 

@@ -10,6 +10,15 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ url(Config::get('filemanager.filemanager_url').'/showfiles') }}">View Uploaded Files</a>
             </li>
+            <li class="float-right" style="float:right">
+
+              @if( !empty(Session::get('theresponse')) )
+
+                {{ Session::get('theresponse')["message"] }}
+
+              @endif
+
+            </li>
         </ul>
     </div>
 </nav>

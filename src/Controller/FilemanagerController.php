@@ -82,8 +82,8 @@ class FilemanagerController extends Controller
               $constraints->aspectRatio();
             })->save($resized);
 
-            if($filemanagerDisk=="s3"){
-
+            if($filemanagerDisk["s3"]["default"]){
+              $bucket  = env('AWS_BUCKET');
               // $thumbUploaded->save($resized);
               // url('storage/').$resize_name;
               //Config::get('filemanager.files_upload_path')
@@ -96,15 +96,17 @@ class FilemanagerController extends Controller
                 $filePath = 'uploads/imgs/' . $save_name;
                 $filePathThumbs = 'uploads/imgs/thumbnails/' . $resize_name;
               }
-              $path = 'https://s3.amazonaws.com/coditiv/'.$filePath;
-              $pathUrl = 'https://coditiv.s3.amazonaws.com/'.$filePath;
-              $pathThumbs = 'https://s3.amazonaws.com/coditiv/'.$filePathThumbs;
-              $pathUrlThumbs = 'https://coditiv.s3.amazonaws.com/'.$filePathThumbs;
+              $path = 'https://s3.amazonaws.com/'.$bucket.'/'.$filePath;
+              $pathUrl = $filemanagerDisk['s3']['cname_url'] != '' ? $filemanagerDisk['s3']['cname_url'].'/'.$filePath : 'https://'.$bucket.'.s3.amazonaws.com/'.$filePath;
+              $pathThumbs = 'https://s3.amazonaws.com/'.$bucket.'/'.$filePathThumbs;
+              $pathUrlThumbs = $filemanagerDisk['s3']['cname_url'] != '' ? $filemanagerDisk['s3']['cname_url'].'/'.$filePathThumbs : 'https://'.$bucket.'.s3.amazonaws.com/'.$filePathThumbs;
 
               $s3 = \Storage::disk('s3');
               $imageAmazoned = $s3->put($filePath, file_get_contents($photo), 'public');
               $thumbAmazoned = $s3->put($filePathThumbs, file_get_contents($resized), 'public');
-              $fileurl = $pathUrlThumbs;
+
+              $fileurl = $pathUrl;
+              $fileurlThumb = $pathUrlThumbs;
             }else{
 
               // $toStore = \Storage::disk('public');
@@ -118,10 +120,13 @@ class FilemanagerController extends Controller
 
             $upload = new Upload();
             $upload->filename = $save_name;
+            $upload->object_id = isset($request->post_id)? $request->post_id : null;
+            $upload->user_id   = \Auth::user()->id;
             $upload->resized_name = $resize_name;
             $upload->original_name = basename($photo->getClientOriginalName());
-            if($filemanagerDisk=="s3"){
+            if($filemanagerDisk["s3"]["default"]){
               $upload->amazon_url = $fileurl;
+              $upload->amazon_thumb_url = $fileurlThumb;
             }
             $upload->file_url = $fileurl;
             $upload->save();
@@ -161,5 +166,24 @@ class FilemanagerController extends Controller
         }
 
         return Response::json(['message' => 'File successfully delete'], 200);
+    }
+    public function deleteFiles(Request $request){
+      $requested = $request->POST;
+      $page      = $request->page;
+
+      $action   = $request->chooseaction; //1 for delete, 2 for archive,...
+      if($action=='1' && !empty($request->posts)){
+        foreach ($request->posts as $key => $value) {
+          $upload         = Upload::find($value);
+          $theFile        = $upload->filename;
+          $theFileThumb   = $upload->resized_name;
+          $deleteFile = Storage::disk('s3')->delete('/uploads/imgs/'.$theFile);
+          $deleteFileThumb = Storage::disk('s3')->delete('/uploads/imgs/thumbnails/'.$theFileThumb);
+          $upload->delete();
+        }
+        $message  = "Posts deleted successfully";
+        $msgtype  = 1;
+      }
+      return redirect('/'.Config::get('filemanager.filemanager_url').'/showfiles?page='.$request->page)->with( ['page' => $page, 'theresponse'=>["message"=> $message, "msgtype"=>$msgtype]] );
     }
 }
