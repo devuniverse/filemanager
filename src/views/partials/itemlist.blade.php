@@ -3,7 +3,7 @@
     <input type="hidden" name="backto" value="{{ url()->full() }}">
     <input type="hidden" name="page" value="@if(isset($_GET['page']) && $_GET['page']!=''){{ $_GET['page'] }}@else 1 @endif">
       @if(isset($_GET['post_id']) && $_GET['post_id']!='')
-        <input type="hidden" name="post_id" value="{{ $_GET['post_id'] }} @endif">
+        <input type="hidden" name="post_id" value="{{ $_GET['post_id'] }}">
       @endif
     @csrf
 
