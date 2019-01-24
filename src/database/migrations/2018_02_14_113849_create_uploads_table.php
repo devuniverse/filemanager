@@ -11,13 +11,16 @@ class CreateUploadsTable extends Migration
      */
     public function up()
     {
+      if (!Schema::hasTable('uploads')) {
         Schema::create('uploads', function (Blueprint $table) {
-            $table->increments('id');
-            $table->text('filename');
-            $table->text('resized_name');
-            $table->text('original_name');
-            $table->timestamps();
+          $table->increments('id');
+          $table->text('filename');
+          $table->text('resized_name');
+          $table->text('original_name');
+          $table->timestamps();
         });
+      }
+
     }
     /**
      * Reverse the migrations.

@@ -24,11 +24,11 @@ class FilemanagerServiceProvider extends ServiceProvider
         __DIR__.'/Config/filemanager.php' => config_path('filemanager.php'),
         __DIR__.'/public' => public_path('filemanager/assets'),
       ]);
-      $this->publishes([
-          __DIR__.'/database/' => database_path(),
-      ], 'filemanager');
+      // $this->publishes([
+      //     __DIR__.'/database/' => database_path(),
+      // ], 'filemanager');
       $this->loadMigrationsFrom(__DIR__.'/database/migrations');
-      
+
       /************************  TO VIEWS ***************************/
 
       view()->composer('*', function ($view){
