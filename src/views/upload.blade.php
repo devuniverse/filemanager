@@ -29,7 +29,7 @@
       uploadMultiple: true,
       parallelUploads: 1,
       maxFilesize: 16,
-      acceptedFiles: ".jpeg,.jpg,.png,.gif,.zip, .tar, .doc, .docx",
+      acceptedFiles: ".jpeg,.jpg,.png,.gif,.zip, .tar, .doc, .docx, .mp3",
       previewTemplate: document.querySelector('#preview').innerHTML,
       addRemoveLinks: true,
       dictRemoveFile: 'Remove file',
@@ -68,8 +68,9 @@
         });
       },
       success: function (file, done) {
+          console.log(file);
           total_photos_counter++;
-          $("#counter").text("# " + total_photos_counter);
+          $("#counter").text("#" + total_photos_counter);
           file["customName"] = name;
           setTimeout(function(){
             $('.btn-primary.start').find('i').remove();

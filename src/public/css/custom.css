@@ -95,3 +95,27 @@
     width: 100%;
     height: 2.5rem;
 }
+select.chooseaction {
+    width: 100%;
+    min-height: 2.6rem;
+    padding-top: 0.4rem;
+    text-align: center;
+}
+.pagination {
+    display: inline-block;
+    vertical-align: middle;
+}
+.pagination li {
+    display: inline-block;
+    vertical-align: middle;
+}
+button.close {
+    padding: 0.3rem 0.6rem;
+    background-color: #fff;
+    border: 0;
+    -webkit-appearance: none;
+    margin-top: -5px;
+    margin-left: 12px;
+    border-radius: 1rem;
+}
+.alert-success {margin-bottom: 0;}

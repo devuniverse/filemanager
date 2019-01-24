@@ -1,12 +1,28 @@
 <?php
 return [
-
-  "files_upload_path"      => "uploads",
-
+  /**
+   *|
+   */
+  "filemanager_default_disk" => "public",
+  /**
+   *|
+   */
+  "files_upload_path"       => "uploads",
+  /**
+   *|
+   */
+  "files_upload_thumb_path" => "uploads/thumbnails",
+  /**
+   *|
+   */
   "filemanager_url"      => "file-manager",
-
+  /**
+   *|
+   */
   "master_file_extend" => "filemanager::main",
-
+  /**
+   *|
+   */
   "files_per_page" => 25,
 
   /**
@@ -18,23 +34,26 @@ return [
   "filemanager_storage_disk" => [
 
       "public"  => [
-        "default" => true
+
       ],
       "s3" => [
         "cname_path" => "", //  s3.amazonaws.com/bucket
         "cname_url"  => "",  //  bucket.s3.amazonaws.com
-        "default"    => false,
       ]
     ],
 
   // "default_file_system" => "public",
-
+  /**
+   *|
+   */
   'yields' => [
       'head'   => 'css',
       'footer' => 'js',
       'filemanager-content'=>'filemanager-content'
   ],
-
+  /**
+   *|
+   */
   'includes' => [
       'jquery'   => true,
       'animate' => true,

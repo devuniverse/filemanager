@@ -12,11 +12,12 @@
        }
   });
   $(document).on("submit",".mass-actions-form", function(event){
-    var optionText = $(".choose-action option:selected").val();
+    var optionText = $(".chooseaction option:selected").val();
     if(optionText=='0'){
       event.preventDefault();
+    }else{
+      $('.btn-primary.btn-apply-action').prepend('<i class="fa fa-spinner fa-spin"></i>');
     }
-    $('.btn-primary.btn-apply-action').prepend('<i class="fa fa-spinner fa-spin"></i>');
   });
 
 })(jQuery);

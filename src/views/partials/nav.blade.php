@@ -13,8 +13,17 @@
             <li class="float-right" style="float:right">
 
               @if( !empty(Session::get('theresponse')) )
-
-                {{ Session::get('theresponse')["message"] }}
+                @if(Session::get('theresponse')["msgtype"]==1)
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong>Well done!</strong> {{ Session::get('theresponse')["message"] }}
+                </div>
+                @else
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong>Error!</strong> {{ Session::get('theresponse')["message"] }}
+                </div>
+                @endif
 
               @endif
 
