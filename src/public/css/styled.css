@@ -38,18 +38,18 @@
 	content: '\2714';
 	font-size: 14px;
 	position: absolute;
-	top: 0px;
+	top: -8px;
 	left: 3px;
 	color: #fff;
 }
 
 .filemanager-main .big-checkbox + label {
-	padding: 18px;
+	padding: 12px;
 }
 
 .filemanager-main .big-checkbox:checked + label:after {
-	font-size: 28px;
-	left: 6px;
+  font-size: 28px;
+  left: 2px;
 }
 
 .filemanager-main .tag {
