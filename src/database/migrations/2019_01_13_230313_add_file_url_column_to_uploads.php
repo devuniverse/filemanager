@@ -15,7 +15,7 @@ class AddFileUrlColumnToUploads extends Migration
     {
       if (!Schema::hasColumn('uploads', 'file_url')){
         Schema::table('uploads', function (Blueprint $table) {
-          $table->string('file_url')->after("file_url")->default('')->nullable();
+          $table->string('file_url')->after("original_name")->default('')->nullable();
         });
       }
     }
