@@ -13,10 +13,17 @@ class AddObjectIdColumnToUploads extends Migration
      */
     public function up()
     {
+      if (!Schema::hasColumn('uploads', 'object_id')){
         Schema::table('uploads', function (Blueprint $table) {
           $table->integer('object_id')->after("id")->nullable();
+        });
+      }
+      if (!Schema::hasColumn('uploads', 'user_id')){
+        Schema::table('uploads', function (Blueprint $table) {
           $table->integer('user_id')->after("object_id");
         });
+      }
+
     }
 
     /**
@@ -26,9 +33,15 @@ class AddObjectIdColumnToUploads extends Migration
      */
     public function down()
     {
+      if (Schema::hasColumn('uploads', 'object_id')){
         Schema::table('uploads', function (Blueprint $table) {
           $table->dropColumn('object_id');
+        });
+      }
+      if (Schema::hasColumn('uploads', 'user_id')){
+        Schema::table('uploads', function (Blueprint $table) {
           $table->dropColumn('user_id');
         });
+      }
     }
 }

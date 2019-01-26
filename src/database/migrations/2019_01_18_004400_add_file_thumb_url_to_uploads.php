@@ -13,9 +13,12 @@ class AddFileThumbUrlToUploads extends Migration
      */
     public function up()
     {
+      if (!Schema::hasColumn('uploads', 'amazon_thumb_url')){
         Schema::table('uploads', function (Blueprint $table) {
           $table->string('amazon_thumb_url')->after("amazon_url")->default('')->nullable();
         });
+      }
+
     }
 
     /**
@@ -25,8 +28,10 @@ class AddFileThumbUrlToUploads extends Migration
      */
     public function down()
     {
+      if (Schema::hasColumn('uploads', 'amazon_thumb_url')){
         Schema::table('uploads', function (Blueprint $table) {
           $table->dropColumn('amazon_thumb_url');
         });
+      }
     }
 }

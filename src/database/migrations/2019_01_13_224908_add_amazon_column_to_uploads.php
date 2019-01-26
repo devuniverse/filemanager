@@ -13,9 +13,11 @@ class AddAmazonColumnToUploads extends Migration
      */
     public function up()
     {
-        Schema::table('uploads', function (Blueprint $table) {
-          $table->string('amazon_url')->after("original_name")->default('')->nullable()->comments('The URL in amazon if uploaded there');
-        });
+      if (!Schema::hasColumn('uploads', 'amazon_url')){
+          Schema::table('uploads', function (Blueprint $table) {
+            $table->string('amazon_url')->after("original_name")->default('')->nullable()->comments('The URL in amazon if uploaded there');
+          });
+      }
     }
 
     /**
@@ -25,8 +27,10 @@ class AddAmazonColumnToUploads extends Migration
      */
     public function down()
     {
+      if (Schema::hasColumn('uploads', 'amazon_url')){
         Schema::table('uploads', function (Blueprint $table) {
           $table->dropColumn('amazon_url');
         });
+      }
     }
 }

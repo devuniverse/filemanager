@@ -13,9 +13,12 @@ class AddFileUrlThumbColumnToUploads extends Migration
      */
     public function up()
     {
+      if (!Schema::hasColumn('uploads', 'file_url_thumb')){
         Schema::table('uploads', function (Blueprint $table) {
           $table->string('file_url_thumb')->after("file_url")->nullable();
         });
+      }
+
     }
 
     /**
@@ -25,8 +28,10 @@ class AddFileUrlThumbColumnToUploads extends Migration
      */
     public function down()
     {
+      if (Schema::hasColumn('uploads', 'file_url_thumb')){
         Schema::table('uploads', function (Blueprint $table) {
           $table->string('file_url_thumb');
         });
+      }
     }
 }

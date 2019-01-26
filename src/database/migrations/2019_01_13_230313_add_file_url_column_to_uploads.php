@@ -13,9 +13,11 @@ class AddFileUrlColumnToUploads extends Migration
      */
     public function up()
     {
+      if (!Schema::hasColumn('uploads', 'file_url')){
         Schema::table('uploads', function (Blueprint $table) {
-          $table->string('file_url')->after("amazon_url")->default('')->nullable();
+          $table->string('file_url')->after("file_url")->default('')->nullable();
         });
+      }
     }
 
     /**
@@ -25,8 +27,10 @@ class AddFileUrlColumnToUploads extends Migration
      */
     public function down()
     {
+      if (Schema::hasColumn('uploads', 'file_url')){
         Schema::table('uploads', function (Blueprint $table) {
           $table->dropColumn('file_url');
         });
+      }
     }
 }
