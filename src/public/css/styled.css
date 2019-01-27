@@ -7,7 +7,7 @@
     display: inline-block;
     vertical-align: middle;
     padding: 0.5rem;
-    height: 3.5rem;
+    height: 2.7rem;
 }
 .filemanager-main .regular-checkbox {
 	display: none;
@@ -123,3 +123,44 @@
 	left: 4px;
 	top: 4px;
 }
+.filemanager-main .collapse {
+  display: inline-block;
+  visibility: visible;
+}
+.filemanager-main #navbarSupportedContent {
+    padding: 0;border-bottom: 5px solid #007bff;
+}
+.filemanager-main .navbar-nav {
+    padding: 0;
+    margin: 0;
+}
+.filemanager-main .message .fas.fa-plus-circle {
+    font-size: 4rem;
+    color: #b8b8b8;
+}
+.filemanager-main .navbar-nav .selected {
+    background-color: #007bff;
+}
+.filemanager-main .navbar-nav .selected a{ color: #fff !important}
+.filemanager-main. navbar {padding: 0.5rem 0rem;}
+.filemanager-main {
+    padding-left: 0;
+    padding-right: 0;
+    width: 97%;
+    text-align: center;
+}
+.filemanager-main .table-responsive-sm .table {
+    text-align: left;
+}
+.filemanager-main .mass-actions-form {
+    display: block;
+    margin: auto;text-align: center;
+}
+.filemanager-main .th.cell, .filemanager-main .td.cell {
+    text-align: left;
+}
+.filemanager-main .actions-menu {
+    display: inline-block;
+    vertical-align: middle;
+}
+.filemanager-main .navbar {padding: 6px 0 0 0;}

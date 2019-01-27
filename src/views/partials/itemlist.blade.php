@@ -8,18 +8,6 @@
 	  @endif
 	@csrf
 
-	<div class="actions-menu">
-	  <div class="list-actions vertimiddle">
-		<select class="chooseaction" name="chooseaction">
-		  <option value="0">Choose one</option>
-		  <option value="1">Delete</option>
-		  <option value="2">Archive</option>
-		  <option value="3" disabled>Update</option>
-		</select>
-	  </div><div class="apply-action vertimiddle">
-		<button type="submit" name="button" class="btn btn-primary btn-apply-action">{{ __("Apply") }}</button>
-	  </div>
-	</div>
     <div class="pagination-container">
         {{ $files->links() }}
     </div>
@@ -29,7 +17,18 @@
 			<div class="checkboxcontainer">
 			  <input type="checkbox" id="checkbox-all" class="regular-checkbox big-checkbox"><label for="checkbox-all"></label>
 			</div>
-			Image
+      <div class="actions-menu">
+    	  <div class="list-actions vertimiddle">
+    		<select class="chooseaction" name="chooseaction">
+    		  <option value="0">Choose one</option>
+    		  <option value="1">Delete</option>
+    		  <option value="2">Archive</option>
+    		  <option value="3" disabled>Update</option>
+    		</select>
+    	  </div><div class="apply-action vertimiddle">
+    		<button type="submit" name="button" class="btn btn-primary btn-apply-action">{{ __("Apply") }}</button>
+    	  </div>
+    	</div>
 		  </div><!--
 		  --><div class="th cell lap--1-2 nexus--1-4" scope="col">Filename</div><!--
 		  --><div class="th cell lap--1-2 nexus--1-4" scope="col">Original Filename</div><!--

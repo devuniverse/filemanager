@@ -94,12 +94,12 @@
 
     <div class="row">
         <div class="col-sm-10 offset-sm-1">
-            <h2 class="page-heading">Upload your Images <span id="counter"></span></h2>
+            <h2 class="page-heading">Upload your Files <span id="counter"></span></h2>
             <form method="post" action="{{ url(Config::get('filemanager.filemanager_url').'/file-save') }}"
                   enctype="multipart/form-data" class="dropzone" id="filemanager-dropzone">
                 {{ csrf_field() }}
                 <div class="dz-message">
-                    <div class="col-xs-8">
+                    <div class="col-xs-12">
                         <div class="message">
                             <p><i class="fas fa-plus-circle"></i></p>
                         </div>

@@ -15,6 +15,10 @@ return [
   /**
    *|
    */
+  "filemanager_url_protocol"      => "https",
+  /**
+   *|
+   */
   "filemanager_url"      => "file-manager",
   /**
    *|

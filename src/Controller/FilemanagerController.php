@@ -23,10 +23,11 @@ class FilemanagerController extends Controller
     public function __construct()
     {
         // $this->files_upload_path = storage_path(Config::get('filemanager.files_upload_path'));
-        $this->default_disk           = Config::get('filemanager.filemanager_default_disk');
-        $this->files_upload_path      = Storage::disk(Config::get('filemanager.filemanager_default_disk'))->getAdapter()->getPathPrefix().Config::get('filemanager.files_upload_path');
-        $this->files_upload_thumb_path= Storage::disk(Config::get('filemanager.filemanager_default_disk'))->getAdapter()->getPathPrefix().Config::get('filemanager.files_upload_thumb_path');
-        $this->image_extensions       = ['jpeg','jpg', 'png', 'gif'];
+        $this->default_disk            = Config::get('filemanager.filemanager_default_disk');
+        $this->filemanager_url_protocol=Config::get('filemanager.filemanager_url_protocol');
+        $this->files_upload_path       = Storage::disk(Config::get('filemanager.filemanager_default_disk'))->getAdapter()->getPathPrefix().Config::get('filemanager.files_upload_path');
+        $this->files_upload_thumb_path = Storage::disk(Config::get('filemanager.filemanager_default_disk'))->getAdapter()->getPathPrefix().Config::get('filemanager.files_upload_thumb_path');
+        $this->image_extensions        = ['jpeg','jpg', 'png', 'gif'];
     }
     public function loadIndex(){
       $files = Upload::paginate(Config::get('filemanager.files_per_page'));
@@ -122,10 +123,9 @@ class FilemanagerController extends Controller
 
               $s3 = \Storage::disk('s3');
               $imageAmazoned = $s3->put($filePath, file_get_contents($file), 'public');
-              // $thumbAmazoned = $s3->put($filePathThumbs, file_get_contents($resized), 'public');
 
-              $fileurl = $pathUrl;
-              $fileurlThumb = $pathUrlThumbs;
+              $fileurl = $this->filemanager_url_protocol.'://'.$pathUrl;
+              $fileurlThumb = $this->filemanager_url_protocol.'://'.$pathUrlThumbs;
             }else{
 
               //$this->files_upload_thumb_path
