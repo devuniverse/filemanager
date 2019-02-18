@@ -42,22 +42,12 @@
 			  <div class="col-inner">
 
 				@if(\Config::get('filemanager.filemanager_default_disk') == "s3")
-          <?php if($file->amazon_thumb_url != ""): ?>
-            <img src="<?php echo $file->amazon_thumb_url; ?>">
-          <?php else: ?>
-            <img src="<?php echo asset('filemanager/assets/images/default-post.jpg'); ?>" width="150">
-          <?php endif ?>
+
+					@include('filemanager::partials.inner.listamazon')
+
 				@else
 
-				  <img src="<?php
-
-				  $url = Storage::disk('public')->url(Config::get('filemanager.files_upload_thumb_path').'/'.$file->resized_name);
-				  if(isset($file->file_url_thumb)){
-					echo $url;
-				  }else{
-					echo asset('filemanager/assets/images/default-post.jpg');
-				  }
-				  ?>" width="150">
+					@include('filemanager::partials.inner.listother')
 
 				@endif
 				<div class="checkboxcontainer">

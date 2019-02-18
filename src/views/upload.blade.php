@@ -29,7 +29,7 @@
       uploadMultiple: true,
       parallelUploads: 1,
       maxFilesize: 16,
-      acceptedFiles: ".jpeg,.jpg,.png,.gif,.zip, .tar, .doc, .docx, .mp3",
+      acceptedFiles: ".jpeg,.jpg,.png,.gif,.zip, .tar, .doc, .docx, .mp3, .pdf",
       previewTemplate: document.querySelector('#preview').innerHTML,
       addRemoveLinks: true,
       dictRemoveFile: 'Remove file',
@@ -93,7 +93,7 @@
 @include('filemanager::partials.nav')
 
     <div class="row">
-        <div class="col-sm-10 offset-sm-1">
+        <div class="col-sm-12">
             <h2 class="page-heading">Upload your Files <span id="counter"></span></h2>
             <form method="post" action="{{ url(Config::get('filemanager.filemanager_url').'/file-save') }}"
                   enctype="multipart/form-data" class="dropzone" id="filemanager-dropzone">

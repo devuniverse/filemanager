@@ -19,6 +19,10 @@ class FilemanagerController extends Controller
 
   private $files_upload_path;
   private $files_upload_thumb_path;
+  private $images_path;
+  private $images_thumb_path;
+  private $zips_folder;
+  private $others_folder;
 
     public function __construct()
     {
@@ -28,10 +32,30 @@ class FilemanagerController extends Controller
         $this->files_upload_path       = Storage::disk(Config::get('filemanager.filemanager_default_disk'))->getAdapter()->getPathPrefix().Config::get('filemanager.files_upload_path');
         $this->files_upload_thumb_path = Storage::disk(Config::get('filemanager.filemanager_default_disk'))->getAdapter()->getPathPrefix().Config::get('filemanager.files_upload_thumb_path');
         $this->image_extensions        = ['jpeg','jpg', 'png', 'gif'];
+        
+        $this->images_path             = 'imgs';
+        $this->images_thumb_path       = 'imgs/thumbnails';
+        $this->zips_folder             = 'zips';
+        $this->others_folder           = 'others';
+
     }
     public function loadIndex(){
       $files = Upload::paginate(Config::get('filemanager.files_per_page'));
       return view('filemanager::index', compact('files'));
+    }
+    private function isImage($extension){
+      if(in_array($extension, $this->image_extensions)){
+        return true;
+      }else{
+        return false;
+      }
+    }
+    private function isZip($extension){
+      if( $extension =='zip'){
+        return true;
+      }else{
+        return false;
+      }
     }
     /**
      * Display all of the images.
@@ -86,7 +110,7 @@ class FilemanagerController extends Controller
 
             $resized  = $this->files_upload_thumb_path.'/'. $resize_name;
 
-            if(in_array($extension, $this->image_extensions)){
+            if(self::isImage($extension)){
               $thumbUploaded = Image::make($file)
               ->resize(150, null, function ($constraints) {
                 $constraints->aspectRatio();
@@ -108,13 +132,20 @@ class FilemanagerController extends Controller
               // $s3 = Storage::disk('s3');
               // $s3->put('your/s3/path/file.jpg', file_get_contents($uploadedFile));
 
-              if(in_array($extension, $this->image_extensions)){
-                $filePath = 'uploads/imgs/' . $save_name;
-                $filePathThumbs = 'uploads/imgs/thumbnails/' . $resize_name;
-              }elseif($extension=="zip"){
-                $filePath = 'uploads/zips/' . $save_name;
+              if(self::isImage($extension)){
+
+                $filePath       = $this->images_path.'/'. $save_name;
+                $filePathThumbs = $this->images_thumb_path.'/' . $resize_name;
+
+              }elseif(self::isZip($extension)){
+
+
+                $filePath = $this->files_upload_path.'/'.$this->zips_folder.'/'. $save_name;
+
               }else{
-                $filePath = 'uploads/other/' . $save_name;
+          
+                $filePath = $this->files_upload_path.'/'.$this->others_folder.'/'. $save_name;
+
               }
               $path = 'https://s3.amazonaws.com/'.$bucket.'/'.$filePath;
               $pathUrl = $filemanagerDisk['s3']['cname_url'] != '' ? $filemanagerDisk['s3']['cname_url'].'/'.$filePath : 'https://'.$bucket.'.s3.amazonaws.com/'.$filePath;
@@ -136,7 +167,7 @@ class FilemanagerController extends Controller
               $stored = $toStore->put(Config::get('filemanager.files_upload_path').'/'.$save_name, file_get_contents($file));
               $fileurl = $toStore->url($this->files_upload_path.'/'.$save_name);
 
-              if(in_array($extension, $this->image_extensions)){
+              if(self::isImage($extension)){
                 $fileurlThumb = $toStore->url($this->files_upload_path.'/'.$resize_name);
               }else{
                 $fileurlThumb = '';
@@ -159,6 +190,7 @@ class FilemanagerController extends Controller
               $upload->file_url = $fileurl;
               $upload->file_url_thumb = $fileurlThumb;
             }
+            $upload->file_extension = $extension;
             $upload->save();
         }
         return Response::json([
@@ -167,8 +199,9 @@ class FilemanagerController extends Controller
     }
 
     /**
+     * @method destroy
+     * @param $request
      * Remove the images from the storage.
-     *
      * @param Request $request
      */
     public function destroy(Request $request)
@@ -197,6 +230,11 @@ class FilemanagerController extends Controller
 
         return Response::json(['message' => 'File successfully delete'], 200);
     }
+    /**
+     * @method deleteFiles
+     * @param object mixed $request
+     * @return redirect 
+     */
     public function deleteFiles(Request $request){
       $requested = $request->POST;
       $page      = $request->page;
@@ -207,8 +245,20 @@ class FilemanagerController extends Controller
           $upload         = Upload::find($value);
           $theFile        = $upload->filename;
           $theFileThumb   = $upload->resized_name;
-          $deleteFile = Storage::disk('s3')->delete('/uploads/imgs/'.$theFile);
-          $deleteFileThumb = Storage::disk('s3')->delete('/uploads/imgs/thumbnails/'.$theFileThumb);
+          if(Config::get('filemanager.filemanager_default_disk') =='s3'){
+            $theDisk = Storage::disk('s3');
+            $mainUploads = Config::get('filemanager.files_upload_path');
+            $thumbsUploads = Config::get('filemanager.files_upload_thumb_path');
+          }else{
+            $theDisk = Storage::disk(Config::get('filemanager.filemanager_default_disk'));
+            $mainUploads = Config::get('filemanager.files_upload_path');
+            $thumbsUploads = Config::get('filemanager.files_upload_thumb_path');
+          }
+          //uploads/imgs
+          //uploads/imgs/thumbnails
+
+          $deleteFile = $theDisk->delete($mainUploads.'/'.$theFile);
+          $deleteFileThumb = $theDisk->delete($thumbsUploads.'/'.$theFileThumb);
           $upload->delete();
         }
         $message  = "Posts deleted successfully";
