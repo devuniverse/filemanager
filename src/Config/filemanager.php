@@ -64,5 +64,10 @@ return [
       'fontawesome' => true
   ],
 
-
+  /**
+   *|
+   */
+  'separate_uploads' => [
+    
+  ]
 ];
