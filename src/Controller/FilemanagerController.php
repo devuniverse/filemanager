@@ -167,8 +167,9 @@ class FilemanagerController extends Controller
     }
 
     /**
+     * @method destroy
+     * @param $request
      * Remove the images from the storage.
-     *
      * @param Request $request
      */
     public function destroy(Request $request)
@@ -197,6 +198,11 @@ class FilemanagerController extends Controller
 
         return Response::json(['message' => 'File successfully delete'], 200);
     }
+    /**
+     * @method deleteFiles
+     * @param object mixed $request
+     * @return redirect 
+     */
     public function deleteFiles(Request $request){
       $requested = $request->POST;
       $page      = $request->page;
