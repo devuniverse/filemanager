@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFileUrlThumbColumnToUploads extends Migration
+class AddMimeTypeColumnToUploads extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddFileUrlThumbColumnToUploads extends Migration
      */
     public function up()
     {
-      if (!Schema::hasColumn('uploads', 'file_url_thumb')){
+      if (!Schema::hasColumn('uploads', 'file_mime')){
         Schema::table('uploads', function (Blueprint $table) {
-          $table->string('file_url_thumb')->after("file_url")->nullable();
+          $table->string('file_mime')->after("file_url")->nullable();
+          $table->string('file_extension')->after("file_mime")->default('jpeg');
         });
       }
     }
@@ -27,9 +28,10 @@ class AddFileUrlThumbColumnToUploads extends Migration
      */
     public function down()
     {
-      if (Schema::hasColumn('uploads', 'file_url_thumb')){
+      if (Schema::hasColumn('uploads', 'file_mime')){
         Schema::table('uploads', function (Blueprint $table) {
-           $table->dropColumn('file_url_thumb');
+           $table->dropColumn('file_mime');
+           $table->dropColumn('file_extension');
         });
       }
     }

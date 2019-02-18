@@ -1,5 +1,5 @@
+@import url('../fontawesome/css/font-awesome.min.css');
 .filemanager-main label {
-    display: inline;
     margin-bottom: 0;
     border: 3px solid #007B00;
 }
@@ -142,7 +142,7 @@
     background-color: #007bff;
 }
 .filemanager-main .navbar-nav .selected a{ color: #fff !important}
-.filemanager-main. navbar {padding: 0.5rem 0rem;}
+.filemanager-main.navbar {padding: 0.5rem 0rem;}
 .filemanager-main {
     padding-left: 0;
     padding-right: 0;
@@ -164,3 +164,11 @@
     vertical-align: middle;
 }
 .filemanager-main .navbar {padding: 6px 0 0 0;}
+.fainner {
+    text-align: center;
+    font-size: 2rem;
+    color: #000;
+}
+.fainner .fa {
+    font-size: 5rem;
+}

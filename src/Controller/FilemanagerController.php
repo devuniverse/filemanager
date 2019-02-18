@@ -190,6 +190,7 @@ class FilemanagerController extends Controller
               $upload->file_url = $fileurl;
               $upload->file_url_thumb = $fileurlThumb;
             }
+            $upload->file_extension = $extension;
             $upload->save();
         }
         return Response::json([
