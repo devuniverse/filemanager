@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light filemanagernav">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
             <li class="nav-item nav-item <?php if(\Request::is(Config::get('filemanager.filemanager_url').'/create')): echo 'selected'; endif; ?>">

@@ -119,3 +119,11 @@ button.close {
     border-radius: 1rem;
 }
 .alert-success {margin-bottom: 0;}
+.actions-menu {
+    width: 89.5%;
+    display: inline-block;
+    vertical-align: middle;
+}
+.filemanagernav #navbarSupportedContent {
+    background: #27A9E3 !important;
+}
