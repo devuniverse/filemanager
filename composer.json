@@ -13,6 +13,10 @@
         {
             "name": "Devuniverse",
             "email": "ishimwe@gmail.com"
+        },
+        {
+            "name": "Laravrix",
+            "email": "laravrix@gmail.com"
         }
     ],
     "autoload": {
