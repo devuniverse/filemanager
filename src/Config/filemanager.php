@@ -27,7 +27,7 @@ return [
   /**
    *|
    */
-  "files_per_page" => 25,
+  "files_per_page" => 20,
 
   /**
   *|  #1  : defaults to public. Like Laravel
@@ -68,6 +68,6 @@ return [
    *|
    */
   'separate_uploads' => [
-    
+
   ]
 ];
