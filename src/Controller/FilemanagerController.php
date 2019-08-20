@@ -32,7 +32,7 @@ class FilemanagerController extends Controller
         $this->files_upload_path       = Storage::disk(Config::get('filemanager.filemanager_default_disk'))->getAdapter()->getPathPrefix().Config::get('filemanager.files_upload_path');
         $this->files_upload_thumb_path = Storage::disk(Config::get('filemanager.filemanager_default_disk'))->getAdapter()->getPathPrefix().Config::get('filemanager.files_upload_thumb_path');
         $this->image_extensions        = ['jpeg','jpg', 'png', 'gif'];
-        
+
         $this->images_path             = 'imgs';
         $this->images_thumb_path       = 'imgs/thumbnails';
         $this->zips_folder             = 'zips';
@@ -40,7 +40,7 @@ class FilemanagerController extends Controller
 
     }
     public function loadIndex(){
-      $files = Upload::paginate(Config::get('filemanager.files_per_page'));
+      $files = Upload::orderBy('created_at', 'desc')->paginate(Config::get('filemanager.files_per_page'));
       return view('filemanager::index', compact('files'));
     }
     private function isImage($extension){
@@ -75,7 +75,7 @@ class FilemanagerController extends Controller
      */
     public function create()
     {
-        return view('filemanager::upload');
+        return view('filemanager::upload', ['uniqueupload'=>false]);
     }
 
     /**
@@ -143,7 +143,7 @@ class FilemanagerController extends Controller
                 $filePath = $this->files_upload_path.'/'.$this->zips_folder.'/'. $save_name;
 
               }else{
-          
+
                 $filePath = $this->files_upload_path.'/'.$this->others_folder.'/'. $save_name;
 
               }
@@ -233,7 +233,7 @@ class FilemanagerController extends Controller
     /**
      * @method deleteFiles
      * @param object mixed $request
-     * @return redirect 
+     * @return redirect
      */
     public function deleteFiles(Request $request){
       $requested = $request->POST;
@@ -265,5 +265,13 @@ class FilemanagerController extends Controller
         $msgtype  = 1;
       }
       return redirect('/'.Config::get('filemanager.filemanager_url').'/showfiles?page='.$request->page)->with( ['page' => $page, 'theresponse'=>["message"=> $message, "msgtype"=>$msgtype]] );
+    }
+
+
+    public function modalUploader(Request $request){
+
+      $returnHTML = view('filemanager::uploadlite', ['uniqueupload' => true])->render();
+      return response()->json(array('success' => true, 'html'=>$returnHTML));
+
     }
 }

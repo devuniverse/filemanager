@@ -18,5 +18,6 @@ Route::group(['prefix' => $filemanagerPath,  'middleware' => ['web','auth']], fu
   /**
    * POST ROUTES
    */
+   Route::post('/modaluploader', 'Devuniverse\Filemanager\Controllers\FilemanagerController@modalUploader');
 
 });
