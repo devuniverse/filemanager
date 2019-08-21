@@ -37,6 +37,8 @@ class FilemanagerServiceProvider extends ServiceProvider
 
 
        };
+       $filemanager = new Models\Filemanager();
+       $view->with('filemanager', $filemanager );
       });
     }
 

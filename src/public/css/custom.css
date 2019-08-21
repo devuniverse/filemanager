@@ -50,12 +50,29 @@
     margin: auto;
 }
 .cta-caller-container {
-  position: absolute;
-  bottom: 0.15rem;
+ padding: 2rem;
+}
+.returnurl {
+  width: 80%;
+  margin-bottom: 0;
+  display: inline-block;
+  vertical-align: middle;
+  height: 2.3rem;
+  margin-right: 0.3rem;
+}
+.insert-cta {
+    display: inline-block;
+    vertical-align: middle;
+}
+.uniqueuploader-menu {
+    border-bottom: 4px solid #28b779;
 }
 .message .fas.fa-plus-circle {
     font-size: 4rem;
     color: #b8b8b8;
+}
+.file-unique .file-inner {
+    padding: 0.4em 0em;
 }
 .dropzone {padding-bottom: 3rem;}
 .btn-primary.disabled, .btn-primary:disabled {
@@ -63,6 +80,9 @@
     background-color: #ccc;
     border-color: #007bff;
     cursor: not-allowed;
+}
+.content-main .content {
+    min-height: 15rem;
 }
 .listing-list-item .checkboxcontainer {
     position: absolute;

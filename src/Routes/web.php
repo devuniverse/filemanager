@@ -10,6 +10,8 @@ Route::group(['prefix' => $filemanagerPath,  'middleware' => ['web','auth']], fu
   Route::get('/', 'Devuniverse\Filemanager\Controllers\FilemanagerController@loadIndex');
   Route::get('create', 'Devuniverse\Filemanager\Controllers\FilemanagerController@create')->name('filemanager.create');
   Route::get('showfiles', 'Devuniverse\Filemanager\Controllers\FilemanagerController@index')->name('load.filemanager.index');
+  Route::get('modaluploader', 'Devuniverse\Filemanager\Controllers\FilemanagerController@loadGallery')->name('load.filemanager.gallery');
+
 
   Route::post('/file-save', 'Devuniverse\Filemanager\Controllers\FilemanagerController@store');
   Route::post('/file-delete', 'Devuniverse\Filemanager\Controllers\FilemanagerController@destroy');

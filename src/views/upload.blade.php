@@ -86,77 +86,7 @@
         {{--End of Dropzone Preview Template--}}
     @endsection
     @section(Config::get('filemanager.yields.footer'))
-      @if( Config::get('filemanager.includes.jquery'))
-        <script src="{{ url('/filemanager/assets/js/jquery.js') }}"></script>
-      @endif
-        <script src="{{ url('/filemanager/assets/js/dropzone.js') }}"></script>
-        <script type="text/javascript">
-        function processCustom(){
-          filemanagerDropzone.processQueue();
-        }
-        var total_photos_counter = 0;
-        var name = "";
-        var filemanagerDropzone = new Dropzone("#filemanager-dropzone", {
-          autoProcessQueue: false,
-          uploadMultiple: true,
-          parallelUploads: 1,
-          maxFilesize: 16,
-          acceptedFiles: ".jpeg,.jpg,.png,.gif,.zip, .tar, .doc, .docx, .mp3, .pdf",
-          previewTemplate: document.querySelector('#preview').innerHTML,
-          addRemoveLinks: true,
-          dictRemoveFile: 'Remove file',
-          dictFileTooBig: 'Image is larger than 16MB',
-          timeout: 10000,
-          renameFile: function (file) {
-              name = new Date().getTime() + Math.floor((Math.random() * 100) + 1) + '_' + file.name;
-              return name;
-          },
 
-          init: function () {
-            this.on("addedfile", function(file) {
-              var count= filemanagerDropzone.files.length;
-              if(count < 1){
-                $('.btn-primary.start').prop("disabled", true);
-              }else{
-                $('.btn-primary.start').prop("disabled", false);
-              }
-            });
-            this.on("removedfile", function (file) {
-                var count= filemanagerDropzone.files.length;
-                $.post({
-                    url: '/'+filemanagerPath+'/file-delete',
-                    data: {id: file.customName, _token: $('[name="_token"]').val()},
-                    dataType: 'json',
-                    success: function (data) {
-                        total_photos_counter--;
-                        $("#counter").text("# " + total_photos_counter);
-                    }
-                });
-                if(count < 1){
-                  $('.btn-primary.start').prop("disabled", true);
-                }else{
-                  $('.btn-primary.start').prop("disabled", false);
-                }
-            });
-          },
-          success: function (file, done) {
-              console.log(file);
-              total_photos_counter++;
-              $("#counter").text("#" + total_photos_counter);
-              file["customName"] = name;
-              setTimeout(function(){
-                $('.btn-primary.start').find('i').remove();
-                $('.btn-primary.start').prop("disabled", true);
-                processCustom();
-              }, 500);
-          }
-        });
-        $('.btn-primary.start').on("click", function(event){
-          event.preventDefault();
-          $(this).prepend('<i class="fas fa-circle-notch fa-spin"></i>');
-          processCustom();
-        });
+      @include('filemanager::partials.uploader.dropzonefooter', ['unique' => false ])
 
-        </script>
-        <script src="{{ url('/filemanager/assets/js/dropzone-config.js') }}"></script>
     @endsection

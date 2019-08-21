@@ -95,6 +95,7 @@ class FilemanagerController extends Controller
         if (!is_dir($this->files_upload_path)) {
             mkdir($this->files_upload_path, 0775);
         }
+        $module = isset($request->module) ? $request->module : '';
 
         for ($i = 0; $i < count($files); $i++) {
             $file = $files[$i];
@@ -165,7 +166,7 @@ class FilemanagerController extends Controller
               // $file->move($this->files_upload_path, $save_name);
               // $file->move($this->files_upload_thumb_path, $resize_name);
               $stored = $toStore->put(Config::get('filemanager.files_upload_path').'/'.$save_name, file_get_contents($file));
-              $fileurl = $toStore->url($this->files_upload_path.'/'.$save_name);
+              $fileurl = $toStore->url(Config::get('filemanager.files_upload_path')).'/'.$save_name;
 
               if(self::isImage($extension)){
                 $fileurlThumb = $toStore->url($this->files_upload_path.'/'.$resize_name);
@@ -183,6 +184,7 @@ class FilemanagerController extends Controller
             $upload->user_id   = \Auth::user()->id;
             $upload->resized_name = $resize_name;
             $upload->original_name = basename($file->getClientOriginalName());
+            $upload->module = $module;
             if($this->default_disk == "s3"){
               $upload->amazon_url = $fileurl;
               $upload->amazon_thumb_url = $fileurlThumb;
@@ -194,7 +196,8 @@ class FilemanagerController extends Controller
             $upload->save();
         }
         return Response::json([
-            'message' => 'Image saved Successfully'
+            'message' => 'Image saved Successfully',
+            'uploadedfile' => $fileurl
         ], 200);
     }
 
@@ -269,9 +272,19 @@ class FilemanagerController extends Controller
 
 
     public function modalUploader(Request $request){
-
-      $returnHTML = view('filemanager::uploadlite', ['uniqueupload' => true])->render();
+      $module = $request->module;
+      $returnHTML = view('filemanager::uploadlite', ['uniqueupload' => true, 'module' => $module ])->render();
       return response()->json(array('success' => true, 'html'=>$returnHTML));
+
+    }
+
+    public function loadGallery(Request $request){
+
+
+      $files = \Devuniverse\Filemanager\Models\Upload::orderBy('created_at', 'desc')->paginate(18);
+
+      $returnHTML = view('filemanager::partials.galleryeditor', ['files' => $files])->render();
+      return response()->json($returnHTML);
 
     }
 }
