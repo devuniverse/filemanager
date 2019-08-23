@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Devuniverse\Filemanager\Models\Upload;
+use Devuniverse\Permissions\Models\User;
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
 use Config;
@@ -23,7 +24,7 @@ class FilemanagerController extends Controller
   private $images_thumb_path;
   private $zips_folder;
   private $others_folder;
-
+  private $permissions;
     public function __construct()
     {
         // $this->files_upload_path = storage_path(Config::get('filemanager.files_upload_path'));
@@ -37,7 +38,7 @@ class FilemanagerController extends Controller
         $this->images_thumb_path       = 'imgs/thumbnails';
         $this->zips_folder             = 'zips';
         $this->others_folder           = 'others';
-
+        $this->permissions             = new User();
     }
     public function loadIndex(){
       $files = Upload::orderBy('created_at', 'desc')->paginate(Config::get('filemanager.files_per_page'));
@@ -269,22 +270,32 @@ class FilemanagerController extends Controller
       }
       return redirect('/'.Config::get('filemanager.filemanager_url').'/showfiles?page='.$request->page)->with( ['page' => $page, 'theresponse'=>["message"=> $message, "msgtype"=>$msgtype]] );
     }
-
-
     public function modalUploader(Request $request){
       $module = $request->module;
       $returnHTML = view('filemanager::uploadlite', ['uniqueupload' => true, 'module' => $module ])->render();
       return response()->json(array('success' => true, 'html'=>$returnHTML));
-
     }
-
+    public function modalCropper(Request $request){
+      $imageUrl = $request->url;
+      $returnHTML = view('filemanager::cropper', ['url' => $imageUrl])->render();
+      return response()->json(array('success' => true, 'html'=>$returnHTML));
+    }
+    public function getModalCropper(Request $request){
+      $pxs = $this->permissions;
+      if( ! $pxs->userCan('update_media')){
+        return 'You are not authorized to do that';
+      }else{
+        return view('filemanager::cropper', ['url'=>$request->img, 'identifier'=> $request->identifier]);
+      }
+    }
     public function loadGallery(Request $request){
-
-
       $files = \Devuniverse\Filemanager\Models\Upload::orderBy('created_at', 'desc')->paginate(18);
 
       $returnHTML = view('filemanager::partials.galleryeditor', ['files' => $files])->render();
       return response()->json($returnHTML);
-
     }
+
+
+
+
 }

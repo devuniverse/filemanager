@@ -13,6 +13,8 @@ class Filemanager extends Model
    * @param placeholder
    */
     static public function customTextInput($customId, $module='',$uniqueTo=null,$placeholder =''){
-      return '<input type="text" class="form-control uploadunique" id="'.$customId.'" placeholder="'.$placeholder.'" '.($uniqueTo ? 'data-uniqueto="'.$uniqueTo.'"' : '').' '.($module!="" ? 'data-module="'.$module.'"' : '').'  value="">';
+      return '<div class="custominput-container">'.
+            '<input type="text" class="form-control uploadunique" id="'.$customId.'" placeholder="'.$placeholder.'" '.($uniqueTo ? 'data-uniqueto="'.$uniqueTo.'"' : '').' '.($module!="" ? 'data-module="'.$module.'"' : '').'  value="">'.
+            '</div>';
     }
 }

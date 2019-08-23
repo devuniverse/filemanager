@@ -3,11 +3,11 @@
 							<i class="fa fa-file" aria-hidden="true"></i>
 						</div>
 					@elseif($file->file_extension == "jpeg" || $file -> file_extension =="jpg" || $file -> file_extension =="png" || $file -> file_extension =="gif" )
-						
+
 						<?php if($file->amazon_thumb_url != ""): ?>
-							<img src="<?php echo $file->amazon_thumb_url; ?>">
+							<img src="<?php echo $file->amazon_thumb_url; ?>" data-id="{{ \Crypt::encryptString($file->id) }}">
 						<?php else: ?>
-							<img src="<?php echo asset('filemanager/assets/images/default-post.jpg'); ?>" width="150">
+							<img src="<?php echo asset('filemanager/assets/images/default-post.jpg'); ?>" width="150" data-id="{{ \Crypt::encryptString($file->id) }}">
 						<?php endif ?>
 
 					@elseif($file->file_extension == "pdf")

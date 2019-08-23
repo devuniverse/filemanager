@@ -51,6 +51,8 @@
 }
 .cta-caller-container {
  padding: 2rem;
+}.return-input {
+    width: 100%;
 }
 .returnurl {
   width: 80%;
@@ -72,7 +74,7 @@
     color: #b8b8b8;
 }
 .file-unique .file-inner {
-    padding: 0.4em 0em;
+    padding: 0.4em 0em;position: relative;
 }
 .dropzone {padding-bottom: 3rem;}
 .btn-primary.disabled, .btn-primary:disabled {
@@ -98,7 +100,7 @@
 }
 .tr.row {
     display: inline-block;
-    width: 100%;
+    width: 100%;margin: auto;
 }
 .tr.row .td, .tr.row .th {
     vertical-align: middle;
@@ -122,8 +124,10 @@ select.chooseaction {
     text-align: center;
 }
 .pagination {
-    display: inline-block;
-    vertical-align: middle;
+  display: inline-block;
+  vertical-align: middle;
+  padding-top: 1rem;
+  font-size: 1.3rem;
 }
 .pagination li {
     display: inline-block;
@@ -146,4 +150,28 @@ button.close {
 }
 .filemanagernav #navbarSupportedContent {
     background: #27A9E3 !important;
+}
+.navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    color: #FFF;
+    font-size: 1.9rem;
+    text-transform: uppercase;
+    background-color: rgba(255,255,255,0.3);
+}
+.filemanagernav {
+    padding: 0;
+    margin-top: 1rem;
+}
+.nav-item.selected {
+    background-color: rgb(243, 78, 57);
+}
+.custominput-container {
+    border: 2px dashed #ccc;
+    padding: 1rem;
+}
+.custominput-container img {
+    display: block;
+    margin: 13px auto;
+    max-width: 20em;
 }

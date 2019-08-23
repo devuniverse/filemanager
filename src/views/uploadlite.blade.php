@@ -10,27 +10,28 @@
     <style media="screen">
     .form-radio
     {
-       -webkit-appearance: none;
-       -moz-appearance: none;
-       appearance: none;
-       display: inline-block;
-       position: relative;
-       background-color: #f1f1f1;
-       color: #fff;
-       top: 10px;
-       height: 50px;
-       width: 50px;
-       border: 0;
-       border-radius: 50px;
-       cursor: pointer;
-       margin-right: 7px;
-       outline: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      display: inline-block;
+      position: absolute;
+      background-color: #f1f1f1;
+      color: #fff;
+      top: 20%;
+      height: 35px;
+      width: 35px;
+      border: 0;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-right: 7px;
+      outline: none;
+      left: 6.8%;
     }
     .form-radio:checked::before {
         position: absolute;
         font: 22px/0.4em 'Open Sans', sans-serif;
-        left: 10px;
-        top: 10px;
+        left: 5px;
+        top: 0px;
         content: '\02143';
         transform: rotate(40deg);
     }
@@ -55,11 +56,11 @@
   <body>
     <div class="unique-uploader-main">
       <ul class="uniqueuploader-menu">
-        <li class="btn btn-primary btn-success btn-lg" data-content="1">Upload</li>
-        <li class="btn btn-primary btn-lg"  data-content="2">Existing File</li>
+        <li class="btn btn-primary btn-lg" data-content="1">Upload</li>
+        <li class="btn btn-primary btn-success btn-lg"  data-content="2">Existing File</li>
       </ul>
       <div class="content-main">
-        <div class="content content-1">
+        <div class="content content-1 hidden">
           <div class="row">
             <div class="col-sm-12">
               <h2 class="page-heading">Upload your Files <span id="counter"></span></h2>
@@ -123,7 +124,7 @@
           </div>
           </div>
         </div>
-        <div class="content content-2 hidden" data-content="2">
+        <div class="content content-2" data-content="2">
           @include('filemanager::partials.galleryeditor', ['files' => \Devuniverse\Filemanager\Models\Upload::where('module', $module)->paginate(18)])
         </div>
       </div>
