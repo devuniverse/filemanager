@@ -7,7 +7,7 @@ use App\Http\Requests;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use Config;
 
 class FilemanagerServiceProvider extends ServiceProvider
 {
@@ -19,7 +19,7 @@ class FilemanagerServiceProvider extends ServiceProvider
     public function boot()
     {
       //
-      include __DIR__.'/Routes/web.php';
+      include __DIR__.'/Routes/routes.php';
       $this->publishes([
         __DIR__.'/Config/filemanager.php' => config_path('filemanager.php'),
         __DIR__.'/public' => public_path('filemanager/assets'),
@@ -39,6 +39,10 @@ class FilemanagerServiceProvider extends ServiceProvider
        };
        $filemanager = new Models\Filemanager();
        $view->with('filemanager', $filemanager );
+
+       $filemanagerPath = Config::get('filemanager.mode')==='multi' ? \Request()->global_entity.'/'.Config::get('filemanager.filemanager_url') : Config::get('filemanager.filemanager_url');
+       $view->with('filemanagerUrl', $filemanagerPath );
+
       });
     }
 

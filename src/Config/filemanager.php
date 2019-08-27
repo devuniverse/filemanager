@@ -3,6 +3,10 @@ return [
   /**
    *|
    */
+  "mode" => 'single',
+  /**
+   *|
+   */
   "filemanager_default_disk" => "public",
   /**
    *|

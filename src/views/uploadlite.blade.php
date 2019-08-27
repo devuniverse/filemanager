@@ -64,7 +64,7 @@
           <div class="row">
             <div class="col-sm-12">
               <h2 class="page-heading">Upload your Files <span id="counter"></span></h2>
-              <form method="post" action="{{ url(Config::get('filemanager.filemanager_url').'/file-save') }}"
+              <form method="post" action="/{{ $filemanagerUrl.'/file-save' }}"
               enctype="multipart/form-data" class="dropzone" id="filemanager-dropzone">
               {{ csrf_field() }}
               <input type="hidden" name="module" value="{{ $module }}">
