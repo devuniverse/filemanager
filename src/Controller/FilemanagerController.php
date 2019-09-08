@@ -12,6 +12,7 @@ use Devuniverse\Permissions\Models\User;
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
 use Config;
+use Crypt;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -40,8 +41,14 @@ class FilemanagerController extends Controller
         $this->others_folder           = 'others';
         $this->permissions             = new User();
     }
-    public function loadIndex(){
-      $files = Upload::orderBy('created_at', 'desc')->paginate(Config::get('filemanager.files_per_page'));
+    public function loadIndex(Request $request){
+      if(Config::get('filemanager.mode')=="multi"){
+        $uniqueTo = $request->global_entity;
+        $files = Upload::where('uniqueto',$uniqueTo)->orderBy('created_at', 'desc')->paginate(Config::get('filemanager.files_per_page'));
+      }else{
+        $files = Upload::orderBy('created_at', 'desc')->paginate(Config::get('filemanager.files_per_page'));
+      }
+
       return view('filemanager::index', compact('files'));
     }
     private function isImage($extension){
@@ -63,9 +70,14 @@ class FilemanagerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $files = Upload::paginate(Config::get('filemanager.files_per_page'));
+      if(Config::get('filemanager.mode')=="multi"){
+        $uniqueTo = $request->global_entity;
+        $files = Upload::where('uniqueto',$uniqueTo)->orderBy('created_at', 'desc')->paginate(Config::get('filemanager.files_per_page'));
+      }else{
+        $files = Upload::orderBy('created_at', 'desc')->paginate(Config::get('filemanager.files_per_page'));
+      }
         return view('filemanager::uploaded-images', compact('files'));
     }
 
@@ -88,6 +100,9 @@ class FilemanagerController extends Controller
     public function store(Request $request)
     {
         $files = $request->file('file');
+        if(isset($request->uniqueto)){
+          $uniqueTo = Crypt::decryptString($request->uniqueto);
+        }
 
         if (!is_array($files)) {
             $files = [$files];
@@ -186,6 +201,10 @@ class FilemanagerController extends Controller
             $upload->resized_name = $resize_name;
             $upload->original_name = basename($file->getClientOriginalName());
             $upload->module = $module;
+            if(isset($request->uniqueto)){
+              $upload->uniqueto = $uniqueTo;
+            }
+
             if($this->default_disk == "s3"){
               $upload->amazon_url = $fileurl;
               $upload->amazon_thumb_url = $fileurlThumb;

@@ -88,6 +88,8 @@ var filemanagerDropzone = new Dropzone("#filemanager-dropzone", {
     processCustom();
   },
   error:function(errors){
+    console.log(errors);
+
     processCustom();
   }
 });

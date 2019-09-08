@@ -68,6 +68,10 @@
               enctype="multipart/form-data" class="dropzone" id="filemanager-dropzone">
               {{ csrf_field() }}
               <input type="hidden" name="module" value="{{ $module }}">
+              <?php
+              if(\Config::get('filemanager.mode')=='multi'){ ?>
+                <input type="hidden" name="uniqueto" value="{{ \Crypt::encryptString(\Request()->global_entity) }}">
+              <?php } ?>
               <div class="dz-message">
                 <div class="col-xs-12">
                   <div class="message">
@@ -125,7 +129,7 @@
           </div>
         </div>
         <div class="content content-2" data-content="2">
-          @include('filemanager::partials.galleryeditor', ['files' => \Devuniverse\Filemanager\Models\Upload::where('module', $module)->paginate(18)])
+          @include('filemanager::partials.galleryeditor', ['files' => $gallerylitefiles ])
         </div>
       </div>
 

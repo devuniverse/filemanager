@@ -21,6 +21,9 @@
 @endsection
 
 @section(Config::get('filemanager.yields.footer'))
+<script type="text/javascript">
+  var filemanagerPath = "<?php echo Config::get("filemanager.filemanager_url") ?>";
+</script>
 @if( Config::get('filemanager.includes.jquery'))
   <script src="{{ url('/filemanager/assets/js/jquery.js') }}"></script>
 @endif

@@ -34,7 +34,6 @@
     var token = $('[name="csrf-token"]').prop('content');
     var chosen= $(this);
     var modulex= $(this).data('module');
-
     revealModal();
       $.ajax({
         url: '/'+filemanagerUrl+'/modaluploader',
@@ -45,7 +44,7 @@
           $('.uploads-frame-inner').find('.innerest').html(response.html);
         },
         error: function (errors) {
-          alert(JSON.stringify(errors));
+          console.json(JSON.stringify(errors));
         }
       });
       event.stopImmediatePropagation();

@@ -34,7 +34,15 @@ class FilemanagerServiceProvider extends ServiceProvider
       view()->composer('*', function ($view){
        $request =  Request();
        if(\Auth::check()){
-
+         if(Config::get('filemanager.mode')=="multi"){
+           $request = Request();
+           $uniqueTo = $request->global_entity;
+           $module = $request->module;
+           $files =  \Devuniverse\Filemanager\Models\Upload::where('uniqueto',$uniqueTo)->orderBy('created_at', 'desc')->where('module', $module)->paginate(18);
+         }else{
+           $files =  \Devuniverse\Filemanager\Models\Upload::orderBy('created_at', 'desc')->where('module', $module)->paginate(18);
+         }
+         $view->with('gallerylitefiles', $files);
 
        };
        $filemanager = new Models\Filemanager();
