@@ -1,4 +1,4 @@
-@extends(Config::get('filemanager.master_file_extend'))
+@extends('layouts.backend')
 @section(Config::get('filemanager.yields.head'))
     @if(Config::get('filemanager.includes.fontawesome'))
       <link rel="stylesheet" href="{{ url('/filemanager/assets/fontawesome/css/all.css') }}">

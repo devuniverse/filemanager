@@ -47,6 +47,7 @@ class FilemanagerServiceProvider extends ServiceProvider
        };
        $filemanager = new Models\Filemanager();
        $view->with('filemanager', $filemanager );
+       $view->with('unique', true );
 
        $filemanagerPath = Config::get('filemanager.mode')==='multi' ? \Request()->global_entity.'/'.Config::get('filemanager.filemanager_url') : Config::get('filemanager.filemanager_url');
        $view->with('filemanagerUrl', $filemanagerPath );

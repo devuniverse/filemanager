@@ -19,7 +19,7 @@
 			</div>
       <div class="actions-menu">
     	  <div class="list-actions vertimiddle">
-    		<select class="chooseaction" name="chooseaction">
+    		<select class="chooseaction select-css" name="chooseaction">
     		  <option value="0">Choose one</option>
     		  <option value="1">Delete</option>
     		  <option value="2">Archive</option>

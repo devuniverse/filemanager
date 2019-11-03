@@ -1,4 +1,4 @@
-    @extends(Config::get('filemanager.master_file_extend'))
+    @extends('layouts.backend')
 
     @section(Config::get('filemanager.yields.head'))
         @if(Config::get('filemanager.includes.fontawesome'))
@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <h2 class="page-heading">Upload your Files <span id="counter"></span></h2>
-                <form method="post" action="/{{ $filemanagerUrl.'/file-save' }}"
+                <form method="post" action="{{ url(LaravelGettext::getLocaleLanguage().'/media/file-save') }}"
                       enctype="multipart/form-data" class="dropzone" id="filemanager-dropzone">
                     {{ csrf_field() }}
                     <?php

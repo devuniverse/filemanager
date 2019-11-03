@@ -3,7 +3,7 @@ return [
   /**
    *|
    */
-  "mode" => 'single',
+  "mode" => 'multi',
   /**
    *|
    */
@@ -23,11 +23,11 @@ return [
   /**
    *|
    */
-  "filemanager_url"      => "file-manager",
+  "filemanager_url"      => "{lang}/media",
   /**
    *|
    */
-  "master_file_extend" => "filemanager::main",
+  "master_file_extend" => "layouts.backend",
   /**
    *|
    */
@@ -57,7 +57,7 @@ return [
   'yields' => [
       'head'   => 'css',
       'footer' => 'js',
-      'filemanager-content'=>'filemanager-content'
+      'filemanager-content'=>'content'
   ],
   /**
    *|
