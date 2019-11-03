@@ -36,6 +36,7 @@
       },
       "minimum-stability": "stable",
       "require": {
+        "codiiv/laravel-taxonomies":"^1.2",
         "laravel/framework": "^6.0",
         "intervention/image": "^2.5"
       },
