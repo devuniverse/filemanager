@@ -7,7 +7,7 @@ use App\Http\Requests;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Config;
+
 
 class FilemanagerServiceProvider extends ServiceProvider
 {
@@ -19,7 +19,7 @@ class FilemanagerServiceProvider extends ServiceProvider
     public function boot()
     {
       //
-      include __DIR__.'/Routes/routes.php';
+      include __DIR__.'/Routes/web.php';
       $this->publishes([
         __DIR__.'/Config/filemanager.php' => config_path('filemanager.php'),
         __DIR__.'/public' => public_path('filemanager/assets'),
@@ -33,25 +33,13 @@ class FilemanagerServiceProvider extends ServiceProvider
 
       view()->composer('*', function ($view){
        $request =  Request();
+       $view->with('alluploads', Models\Upload::paginate(20));
+
        if(\Auth::check()){
-         if(Config::get('filemanager.mode')=="multi"){
-           $request = Request();
-           $uniqueTo = $request->global_entity;
-           $module = $request->module;
-           $files =  \Devuniverse\Filemanager\Models\Upload::where('uniqueto',$uniqueTo)->orderBy('created_at', 'desc')->where('module', $module)->paginate(18);
-         }else{
-           $files =  \Devuniverse\Filemanager\Models\Upload::orderBy('created_at', 'desc')->where('module', $module)->paginate(18);
-         }
-         $view->with('gallerylitefiles', $files);
+
+
 
        };
-       $filemanager = new Models\Filemanager();
-       $view->with('filemanager', $filemanager );
-       $view->with('unique', true );
-
-       $filemanagerPath = Config::get('filemanager.mode')==='multi' ? \Request()->global_entity.'/'.Config::get('filemanager.filemanager_url') : Config::get('filemanager.filemanager_url');
-       $view->with('filemanagerUrl', $filemanagerPath );
-
       });
     }
 
