@@ -1,11 +1,11 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light filemanagernav">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
-            <li class="nav-item nav-item <?php if(\Request::is(Config::get('filemanager.filemanager_url').'/create')): echo 'selected'; endif; ?>">
-                <a class="nav-link" href="{{ url(Config::get('filemanager.filemanager_url').'/create') }}"><i class="fa fa-upload" aria-hidden="true"></i> Upload Files</a>
+            <li class="nav-item nav-item <?php if(\Request::is($filemanagerUrl) || \Request::is($filemanagerUrl.'/create')): echo 'selected'; endif; ?>">
+                <a class="nav-link" href="{{ url( LaravelGettext::getLocaleLanguage().'/media/add' ) }}"><i class="fa fa-upload" aria-hidden="true"></i> Upload Files</a>
             </li>
-            <li class="nav-item nav-item <?php if(\Request::is(Config::get('filemanager.filemanager_url').'/showfiles')): echo 'selected'; endif; ?>">
-                <a class="nav-link" href="{{ url(Config::get('filemanager.filemanager_url').'/showfiles') }}"><i class="fa fa-list-alt" aria-hidden="true"></i> Uploaded Files</a>
+            <li class="nav-item nav-item <?php if(\Request::is($filemanagerUrl.'/showfiles')): echo 'selected'; endif; ?>">
+                <a class="nav-link" href="{{ url( LaravelGettext::getLocaleLanguage().'/media/showfiles' ) }}"><i class="fa fa-list-alt" aria-hidden="true"></i> Uploaded Files</a>
             </li>
             <li class="float-right" style="float:right">
 

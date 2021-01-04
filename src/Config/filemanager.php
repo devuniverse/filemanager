@@ -3,6 +3,10 @@ return [
   /**
    *|
    */
+  "mode" => 'multi',
+  /**
+   *|
+   */
   "filemanager_default_disk" => "public",
   /**
    *|
@@ -19,15 +23,15 @@ return [
   /**
    *|
    */
-  "filemanager_url"      => "file-manager",
+  "filemanager_url"      => "{lang}/media",
   /**
    *|
    */
-  "master_file_extend" => "filemanager::main",
+  "master_file_extend" => "layouts.backend",
   /**
    *|
    */
-  "files_per_page" => 25,
+  "files_per_page" => 20,
 
   /**
   *|  #1  : defaults to public. Like Laravel
@@ -53,7 +57,7 @@ return [
   'yields' => [
       'head'   => 'css',
       'footer' => 'js',
-      'filemanager-content'=>'filemanager-content'
+      'filemanager-content'=>'content'
   ],
   /**
    *|
@@ -68,6 +72,6 @@ return [
    *|
    */
   'separate_uploads' => [
-    
+
   ]
 ];

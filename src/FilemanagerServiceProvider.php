@@ -33,7 +33,10 @@ class FilemanagerServiceProvider extends ServiceProvider
 
       view()->composer('*', function ($view){
        $request =  Request();
+       $view->with('alluploads', Models\Upload::paginate(20));
+
        if(\Auth::check()){
+
 
 
        };
