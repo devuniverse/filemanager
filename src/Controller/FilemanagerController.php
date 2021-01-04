@@ -1,6 +1,6 @@
 <?php
 
-namespace Devuniverse\Filemanager\Controllers;
+namespace Devuniverse\Filemanager\Controller;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
