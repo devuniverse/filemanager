@@ -51,7 +51,7 @@ class FilemanagerServiceProvider extends ServiceProvider
     public function register()
     {
       // register our controller
-      $this->app->make('Devuniverse\Filemanager\Controllers\FilemanagerController');
+      $this->app->make('Devuniverse\Filemanager\Controller\FilemanagerController');
       $this->loadViewsFrom(__DIR__.'/views', 'filemanager');
 
       $this->mergeConfigFrom(
